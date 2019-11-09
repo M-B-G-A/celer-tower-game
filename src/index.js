@@ -7,6 +7,7 @@ import { hookAction, hookPainter } from './hook'
 import { tutorialAction, tutorialPainter } from './tutorial'
 import * as constant from './constant'
 import { startAnimate, endAnimate } from './animateFuncs'
+import celerx from './lib/celerx'
 
 window.TowerGame = (option = {}) => {
   const {
@@ -96,24 +97,32 @@ window.TowerGame = (option = {}) => {
   game.pauseBgm = () => {
     game.pauseAudio('bgm')
   }
-
   game.start = () => {
-    const tutorial = new Instance({
-      name: 'tutorial',
-      action: tutorialAction,
-      painter: tutorialPainter
-    })
-    game.addInstance(tutorial)
-    const tutorialArrow = new Instance({
-      name: 'tutorial-arrow',
-      action: tutorialAction,
-      painter: tutorialPainter
-    })
-    game.addInstance(tutorialArrow)
-    game.setTimeMovement(constant.bgInitMovement, 500)
-    game.setTimeMovement(constant.tutorialMovement, 500)
-    game.setVariable(constant.gameStartNow, true)
+    // const tutorial = new Instance({
+    //   name: 'tutorial',
+    //   action: tutorialAction,
+    //   painter: tutorialPainter
+    // })
+    // game.addInstance(tutorial)
+    // celerx.onStart(() => {
+      const tutorialArrow = new Instance({
+          name: 'tutorial-arrow',
+          action: tutorialAction,
+          painter: tutorialPainter
+        })
+        game.addInstance(tutorialArrow)
+        game.setTimeMovement(constant.bgInitMovement, 500)
+        game.setTimeMovement(constant.tutorialMovement, 500)
+        game.setVariable(constant.gameStartNow, true)
+      // }
+    // );
+    celerx.ready();
+    console.log('ready');
   }
+  // game.ready = () => {
+  //   console.log('here');
+  //   celerx.ready()
+  // }
 
   return game
 }

@@ -373,7 +373,7 @@
                         <div class="percent"></div>
                     </div>
                 </div>
-                <div class="text">加载中</div>
+                <div class="text">loading</div>
             </div>
         </div>
 
@@ -401,12 +401,13 @@
                                 class="over-img">
                             <div id="score" class="over-score font-wenxue"></div>
                             <div id="over-zero" class="hide">
-                                <div class="tip"><p>再来一次吧！</p>
-                                    <img
-                                            src="./assets/main-modal-again-b.png"
-                                            class="over-button-b js-reload"><img
-                                            src="./assets/main-modal-invite-b.png"
-                                            class="over-button-b js-invite"></div>
+                                <div class="tip">
+                                    <p>Come Again！</p>
+                                    <img src="./assets/main-modal-again-b.png"
+                                        class="over-button-b js-reload" />
+                                    <img src="./assets/main-modal-invite-b.png"
+                                        class="over-button-b js-invite hide" />
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -439,7 +440,7 @@
       loadFinish = true
       setTimeout(function () {
         $('.loading').hide()
-        $('.landing').show()
+        //$('.landing').show()
       }, 1000)
     }
   }
@@ -450,7 +451,7 @@
     var failed = status.failed
     if (failed > 0 && !loadError) {
       loadError = true
-      alert('加载失败 请刷新后重试')
+      alert('Loading Failed!\nPlease refresh and try again!')
       return
     }
     var percent = parseInt((success / total) * 100);
@@ -490,37 +491,25 @@
     }
   }
 
+  function indexHide() {
+    // $('.landing .action-1').addClass('slideTop')
+    // $('.landing .action-2').addClass('slideBottom')
+    $('.landing').hide()
+    // game.ready()
+  }
+
   // game init with option
-  function gameReady() {
+  function gameReady(callback) {
     game = TowerGame(option)
-
     game.load(function () {
-
       game.playBgm()
       game.init()
-
+      callback()
     }, updateLoading)
   }
 
-  var isWechat = navigator.userAgent.toLowerCase().indexOf("micromessenger") !== -1
-  if (isWechat) {
-    document.addEventListener("WeixinJSBridgeReady", gameReady, false)
-  } else {
-    gameReady()
-  }
-
-  function indexHide() {
-    $('.landing .action-1').addClass('slideTop')
-    $('.landing .action-2').addClass('slideBottom')
-    setTimeout(function () {
-      $('.landing').hide()
-    }, 950)
-  }
-
-  // click event
-  $('#start').on('click', function () {
+  gameReady(function() {
     if (gameStart) return
-    gameStart = true
     indexHide()
     setTimeout(game.start, 400)
   })
@@ -529,43 +518,11 @@
     window.location.href = window.location.href + '?s=' + (+new Date())
   })
 
-  $('.js-invite').on('click', function () {
-    $('.wxShare').show()
-  })
-
-  $('.wxShare').on('click', function () {
-    $('.wxShare').hide()
-  })
-
   // listener
   window.addEventListener('load', function () {
     domReady = true
     hideLoading()
   }, false);
-</script>
-<script>
-  (function (i, s, o, g, r, a, m) {
-    i['GoogleAnalyticsObject'] = r;
-    i[r] = i[r] || function () {
-        (i[r].q = i[r].q || []).push(arguments)
-      }, i[r].l = 1 * new Date();
-    a = s.createElement(o),
-      m = s.getElementsByTagName(o)[0];
-    a.async = 1;
-    a.src = g;
-    m.parentNode.insertBefore(a, m)
-  })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-
-  ga('create', 'UA-46444752-20', 'auto');
-  ga('send', 'pageview');
-
-  var _hmt = _hmt || [];
-  (function () {
-    var hm = document.createElement("script");
-    hm.src = "https://hm.baidu.com/hm.js?c1b044f909411ac4213045f0478e96fc";
-    var s = document.getElementsByTagName("script")[0];
-    s.parentNode.insertBefore(hm, s);
-  })();
 </script>
 </body>
 </html>

@@ -18,7 +18,7 @@ export const endAnimate = (engine) => {
   const threeFiguresOffset = Number(successCount) > 99 ? engine.width * 0.1 : 0
 
   drawYellowString(engine, {
-    string: '层',
+    string: 'F',
     size: engine.width * 0.06,
     x: (engine.width * 0.24) + threeFiguresOffset,
     y: engine.width * 0.12,
@@ -47,7 +47,7 @@ export const endAnimate = (engine) => {
     string: gameScore,
     size: engine.width * 0.06,
     x: engine.width * 0.9,
-    y: engine.width * 0.11,
+    y: engine.width * 0.095,
     textAlign: 'right'
   })
   const { ctx } = engine

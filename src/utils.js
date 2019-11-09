@@ -1,4 +1,5 @@
 import * as constant from './constant'
+import celerx from './lib/celerx'
 
 export const checkMoveDown = engine =>
   (engine.checkTimeMovement(constant.moveDownMovement))
@@ -108,7 +109,7 @@ export const touchEventHandler = (engine) => {
   if (getHookStatus(engine) !== constant.hookNormal) {
     return
   }
-  engine.removeInstance('tutorial')
+  // engine.removeInstance('tutorial')
   engine.removeInstance('tutorial-arrow')
   const b = engine.getInstance(`block_${engine.getVariable(constant.blockCount)}`)
   if (b && b.status === constant.swing) {
@@ -139,6 +140,9 @@ export const addFailedCount = (engine) => {
     engine.pauseAudio('bgm')
     engine.playAudio('game-over')
     engine.setVariable(constant.gameStartNow, false)
+    const lastScore = engine.getVariable(constant.gameScore)
+    celerx.submitScore(lastScore)
+    console.log('submit', lastScore);
   }
 }
 
